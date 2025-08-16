@@ -1,0 +1,33 @@
+.wrapper {
+  padding-bottom: 64px;
+  position: relative;
+  z-index: 2;
+
+  ol {
+    list-style: initial;
+  }
+}
+
+.page {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    1fr min(var(--trimmed-content-width), 100%)
+    1fr;
+  max-width: var(--outer-content-width);
+  margin: 0 auto;
+  padding: 64px var(--viewport-padding) 32px;
+  background: var(--gray-1);
+}
+
+.page > * {
+  grid-column: 2;
+}
+
+@media (min-width: 80rem) {
+  .page {
+    border: 1px solid var(--gray-7);
+
+    border-radius: 8px;
+  }
+}
