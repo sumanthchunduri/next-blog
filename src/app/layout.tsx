@@ -10,6 +10,7 @@ import {
 import Header from "@/components/Header/Header";
 import RespectMotionPreferences from "@/components/RespectMotionPreference";
 import { ViewTransitions } from "next-view-transitions";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,26 +35,29 @@ export default async function RootLayout({
   const savedTheme = (await cookies()).get(COLOR_THEME_COOKIE_NAME);
   const theme = savedTheme?.value || "light";
   return (
-    <ViewTransitions>
-      <RespectMotionPreferences>
-        <html
-          lang="en"
-          data-color-theme={theme}
-          className={theme}
-          style={
-            (theme === "light"
-              ? LIGHT_TOKENS
-              : DARK_TOKENS) as React.CSSProperties
-          }
-        >
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <>
+      <ViewTransitions>
+        <RespectMotionPreferences>
+          <html
+            lang="en"
+            data-color-theme={theme}
+            className={theme}
+            style={
+              (theme === "light"
+                ? LIGHT_TOKENS
+                : DARK_TOKENS) as React.CSSProperties
+            }
           >
-            <Header initialTheme={theme} />
-            {children}
-          </body>
-        </html>
-      </RespectMotionPreferences>
-    </ViewTransitions>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
+              <Header initialTheme={theme} />
+              {children}
+            </body>
+          </html>
+        </RespectMotionPreferences>
+      </ViewTransitions>
+      <Analytics />
+    </>
   );
 }
